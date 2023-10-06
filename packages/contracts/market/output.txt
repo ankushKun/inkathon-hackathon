@@ -1,0 +1,925 @@
+error: cannot find macro `format_args` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/mod.rs:269:35
+    |
+269 |                     Error::custom(format_args!(
+    |                                   ^^^^^^^^^^^
+...
+301 | declare_error_trait!(Error: Sized + StdError);
+    | --------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `declare_error_trait` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+    |
+115 + use alloc::__export::format_args;
+    |
+115 + use core::format_args;
+    |
+
+error: cannot find macro `format_args` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/mod.rs:256:35
+    |
+256 |                     Error::custom(format_args!(
+    |                                   ^^^^^^^^^^^
+...
+301 | declare_error_trait!(Error: Sized + StdError);
+    | --------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `declare_error_trait` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+    |
+115 + use alloc::__export::format_args;
+    |
+115 + use core::format_args;
+    |
+
+error: cannot find macro `format_args` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/mod.rs:251:35
+    |
+251 |                     Error::custom(format_args!(
+    |                                   ^^^^^^^^^^^
+...
+301 | declare_error_trait!(Error: Sized + StdError);
+    | --------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `declare_error_trait` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+    |
+115 + use alloc::__export::format_args;
+    |
+115 + use core::format_args;
+    |
+
+error: cannot find macro `format_args` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/mod.rs:243:31
+    |
+243 |                 Error::custom(format_args!("invalid length {}, expected {}", len, exp))
+    |                               ^^^^^^^^^^^
+...
+301 | declare_error_trait!(Error: Sized + StdError);
+    | --------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `declare_error_trait` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+    |
+115 + use alloc::__export::format_args;
+    |
+115 + use core::format_args;
+    |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:2238:3
+     |
+2238 | #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:2237:9
+     |
+2237 | #[doc = include_str!("../../doc/slice/iter/IterZeros.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:2105:3
+     |
+2105 | #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `format_args` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/mod.rs:229:31
+    |
+229 |                 Error::custom(format_args!("invalid value: {}, expected {}", unexp, exp))
+    |                               ^^^^^^^^^^^
+...
+301 | declare_error_trait!(Error: Sized + StdError);
+    | --------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `declare_error_trait` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+    |
+115 + use alloc::__export::format_args;
+    |
+115 + use core::format_args;
+    |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:2106:9
+     |
+2106 | #[doc = include_str!("../../doc/slice/iter/IterOnes.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find macro `stringify` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:2049:22
+     |
+2049 |                   fmt.debug_struct(stringify!($outer))
+     |                                    ^^^^^^^^^
+...
+2098 | / split_n! {
+2099 | |     SplitN => Split => &'a BitSlice<T, O>;
+2100 | |     SplitNMut => SplitMut => &'a mut BitSlice<T::Alias, O>;
+2101 | |     RSplitN => RSplit => &'a BitSlice<T, O>;
+2102 | |     RSplitNMut => RSplitMut => &'a mut BitSlice<T::Alias, O>;
+2103 | | }
+     | |_- in this macro invocation
+     |
+     = note: this error originates in the macro `split_n` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+     |
+3    + use core::stringify;
+     |
+3    + use crate::macros::internal::core::stringify;
+     |
+
+error: cannot find macro `format_args` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/mod.rs:211:31
+    |
+211 |                 Error::custom(format_args!("invalid type: {}, expected {}", unexp, exp))
+    |                               ^^^^^^^^^^^
+...
+301 | declare_error_trait!(Error: Sized + StdError);
+    | --------------------------------------------- in this macro invocation
+    |
+    = note: this error originates in the macro `declare_error_trait` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+    |
+115 + use alloc::__export::format_args;
+    |
+115 + use core::format_args;
+    |
+
+error: cannot find attribute `derive` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/ignored_any.rs:110:3
+    |
+110 | #[derive(Copy, Clone, Debug, Default, PartialEq)]
+    |   ^^^^^^
+    |
+help: consider importing this attribute macro
+    |
+1   + use core::prelude::rust_2024::derive;
+    |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:2003:9
+     |
+2003 | #[doc = include_str!("../../doc/slice/iter/RSplitNMut.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1989:3
+     |
+1989 | #[derive(Clone)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1990:9
+     |
+1990 | #[doc = include_str!("../../doc/slice/iter/RSplitN.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/value.rs:1510:3
+     |
+1510 | #[derive(Clone, Debug)]
+     |   ^^^^^^
+     |
+help: consider importing this attribute macro
+     |
+24   + use core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1976:9
+     |
+1976 | #[doc = include_str!("../../doc/slice/iter/SplitNMut.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1962:3
+     |
+1962 | #[derive(Clone)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/value.rs:1445:3
+     |
+1445 | #[derive(Clone, Debug)]
+     |   ^^^^^^
+     |
+help: consider importing this attribute macro
+     |
+24   + use core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1963:9
+     |
+1963 | #[doc = include_str!("../../doc/slice/iter/SplitN.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find macro `stringify` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1548:22
+     |
+1548 |                   fmt.debug_struct(stringify!($iter))
+     |                                    ^^^^^^^^^
+...
+1927 | / split!(RSplitMut => &'a mut BitSlice<T::Alias, O> {
+1928 | |     fn next(&mut self) -> Option<Self::Item> {
+1929 | |         let mut split = SplitMut::<'a, T, O, &mut P> {
+1930 | |             slice: mem::take(&mut self.slice),
+...    |
+1952 | |     }
+1953 | | });
+     | |__- in this macro invocation
+     |
+     = note: this error originates in the macro `split` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+     |
+3    + use core::stringify;
+     |
+3    + use crate::macros::internal::core::stringify;
+     |
+
+error: cannot find macro `write` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/value.rs:1406:13
+     |
+1406 |             write!(formatter, "{} elements in map", self.0)
+     |             ^^^^^
+     |
+help: consider importing this macro
+     |
+24   + use core::write;
+     |
+
+error: cannot find macro `write` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/value.rs:1404:13
+     |
+1404 |             write!(formatter, "1 element in map")
+     |             ^^^^^
+     |
+help: consider importing this macro
+     |
+24   + use core::write;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1912:9
+     |
+1912 | #[doc = include_str!("../../doc/slice/iter/RSplitMut.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/value.rs:1044:3
+     |
+1044 | #[derive(Clone, Debug)]
+     |   ^^^^^^
+     |
+help: consider importing this attribute macro
+     |
+24   + use core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `stringify` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1548:22
+     |
+1548 |                   fmt.debug_struct(stringify!($iter))
+     |                                    ^^^^^^^^^
+...
+1884 | / split!(RSplit => &'a BitSlice<T, O> {
+1885 | |     fn next(&mut self) -> Option<Self::Item> {
+1886 | |         let mut split = Split::<'a, T, O, &mut P> {
+1887 | |             slice: mem::take(&mut self.slice),
+...    |
+1909 | |     }
+1910 | | });
+     | |__- in this macro invocation
+     |
+     = note: this error originates in the macro `split` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+     |
+3    + use core::stringify;
+     |
+3    + use crate::macros::internal::core::stringify;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1868:3
+     |
+1868 | #[derive(Clone)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1869:9
+     |
+1869 | #[doc = include_str!("../../doc/slice/iter/RSplit.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find macro `stringify` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1548:22
+     |
+1548 |                   fmt.debug_struct(stringify!($iter))
+     |                                    ^^^^^^^^^
+...
+1815 | / split!(SplitInclusiveMut => &'a mut BitSlice<T::Alias, O> {
+1816 | |     fn next(&mut self) -> Option<Self::Item> {
+1817 | |         if self.done {
+1818 | |             return None;
+...    |
+1865 | |     }
+1866 | | });
+     | |__- in this macro invocation
+     |
+     = note: this error originates in the macro `split` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+     |
+3    + use core::stringify;
+     |
+3    + use crate::macros::internal::core::stringify;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1800:9
+     |
+1800 | #[doc = include_str!("../../doc/slice/iter/SplitInclusiveMut.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find macro `stringify` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1548:22
+     |
+1548 |                   fmt.debug_struct(stringify!($iter))
+     |                                    ^^^^^^^^^
+...
+1754 | / split!(SplitInclusive => &'a BitSlice<T, O> {
+1755 | |     fn next(&mut self) -> Option<Self::Item> {
+1756 | |         if self.done {
+1757 | |             return None;
+...    |
+1797 | |     }
+1798 | | });
+     | |__- in this macro invocation
+     |
+     = note: this error originates in the macro `split` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+     |
+3    + use core::stringify;
+     |
+3    + use crate::macros::internal::core::stringify;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1738:3
+     |
+1738 | #[derive(Clone)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `write` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/value.rs:981:13
+    |
+981 |             write!(formatter, "{} elements in sequence", self.0)
+    |             ^^^^^
+    |
+help: consider importing this macro
+    |
+24  + use core::write;
+    |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1739:9
+     |
+1739 | #[doc = include_str!("../../doc/slice/iter/SplitInclusive.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find macro `stringify` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1548:22
+     |
+1548 |                   fmt.debug_struct(stringify!($iter))
+     |                                    ^^^^^^^^^
+...
+1688 | / split!(SplitMut => &'a mut BitSlice<T::Alias, O> {
+1689 | |     fn next(&mut self) -> Option<Self::Item> {
+1690 | |         if self.done {
+1691 | |             return None;
+...    |
+1735 | |     }
+1736 | | });
+     | |__- in this macro invocation
+     |
+     = note: this error originates in the macro `split` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+     |
+3    + use core::stringify;
+     |
+3    + use crate::macros::internal::core::stringify;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1673:9
+     |
+1673 | #[doc = include_str!("../../doc/slice/iter/SplitMut.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find macro `stringify` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1548:22
+     |
+1548 |                   fmt.debug_struct(stringify!($iter))
+     |                                    ^^^^^^^^^
+...
+1633 | / split!(Split => &'a BitSlice<T, O> {
+1634 | |     fn next(&mut self) -> Option<Self::Item> {
+1635 | |         if self.done {
+1636 | |             return None;
+...    |
+1670 | |     }
+1671 | | });
+     | |__- in this macro invocation
+     |
+     = note: this error originates in the macro `split` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+     |
+3    + use core::stringify;
+     |
+3    + use crate::macros::internal::core::stringify;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1615:3
+     |
+1615 | #[derive(Clone)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1616:9
+     |
+1616 | #[doc = include_str!("../../doc/slice/iter/Split.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error: cannot find macro `assert_ne` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1502:5
+     |
+1502 |                   assert_ne!(width, 0, "view width cannot be 0");
+     |                   ^^^^^^^^^
+...
+1510 | / new_group! {
+1511 | |     Windows,
+1512 | |     Chunks,
+1513 | |     ChunksMut mut .alias_mut(),
+1514 | |     RChunks,
+1515 | |     RChunksMut mut .alias_mut(),
+1516 | | }
+     | |_- in this macro invocation
+     |
+     = note: this error originates in the macro `new_group` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider importing one of these items
+     |
+3    + use core::assert_ne;
+     |
+3    + use crate::macros::internal::core::assert_ne;
+     |
+
+error: cannot find macro `write` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.188/src/de/value.rs:979:13
+    |
+979 |             write!(formatter, "1 element in sequence")
+    |             ^^^^^
+    |
+help: consider importing this macro
+    |
+24  + use core::write;
+    |
+
+error: cannot find macro `assert_ne` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1381:3
+     |
+1381 |         assert_ne!(width, 0, "Chunk width cannot be 0");
+     |         ^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::assert_ne;
+     |
+3    + use crate::macros::internal::core::assert_ne;
+     |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1359:3
+     |
+1359 | #[derive(Debug)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error[E0412]: cannot find type `Result` in this scope
+  --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:91:46
+   |
+91 |     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+   |                                              ^^^^^^ not found in this scope
+   |
+help: consider importing one of these items
+   |
+66 + use core::fmt::Result;
+   |
+66 + use core::result::Result;
+   |
+66 + use crate::fmt::Result;
+   |
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Ok` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:121:9
+    |
+121 |         Ok(())
+    |         ^^ not found in this scope
+    |
+help: consider importing this tuple variant
+    |
+66  + use core::result::Result::Ok;
+    |
+
+error[E0405]: cannot find trait `AsRef` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:144:8
+    |
+144 |     T: AsRef<[u8]> + ?Sized,
+    |        ^^^^^ not found in this scope
+    |
+help: consider importing this trait
+    |
+66  + use core::convert::AsRef;
+    |
+
+error[E0405]: cannot find trait `Sized` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:144:23
+    |
+144 |     T: AsRef<[u8]> + ?Sized,
+    |                       ^^^^^ not found in this scope
+    |
+help: consider importing this trait
+    |
+66  + use core::marker::Sized;
+    |
+
+error[E0412]: cannot find type `Result` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:141:39
+    |
+141 | fn check_alignment<T, U>(data: &T) -> Result<usize, Error>
+    |                                       ^^^^^^ not found in this scope
+    |
+help: consider importing one of these items
+    |
+66  + use core::fmt::Result;
+    |
+66  + use core::result::Result;
+    |
+66  + use crate::fmt::Result;
+    |
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Err` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:153:16
+    |
+153 |         return Err(err);
+    |                ^^^
+    |
+help: a local variable with a similar name exists
+    |
+153 |         return err(err);
+    |                ~~~
+help: consider importing this tuple variant
+    |
+66  + use core::result::Result::Err;
+    |
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Ok` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:155:5
+    |
+155 |     Ok(alignment)
+    |     ^^ not found in this scope
+    |
+help: consider importing this tuple variant
+    |
+66  + use core::result::Result::Ok;
+    |
+
+error[E0405]: cannot find trait `AsRef` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:161:8
+    |
+161 |     T: AsRef<[u8]> + ?Sized,
+    |        ^^^^^ not found in this scope
+    |
+help: consider importing this trait
+    |
+66  + use core::convert::AsRef;
+    |
+
+error[E0405]: cannot find trait `Sized` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:161:23
+    |
+161 |     T: AsRef<[u8]> + ?Sized,
+    |                       ^^^^^ not found in this scope
+    |
+help: consider importing this trait
+    |
+66  + use core::marker::Sized;
+    |
+
+error[E0412]: cannot find type `Result` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:158:36
+    |
+158 | fn check_length<T, U>(data: &T) -> Result<usize, Error>
+    |                                    ^^^^^^ not found in this scope
+    |
+help: consider importing one of these items
+    |
+66  + use core::fmt::Result;
+    |
+66  + use core::result::Result;
+    |
+66  + use crate::fmt::Result;
+    |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1360:9
+     |
+1360 | #[doc = include_str!("../../doc/slice/iter/RChunksExactMut.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Err` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:170:16
+    |
+170 |         return Err(err);
+    |                ^^^
+    |
+help: a local variable with a similar name exists
+    |
+170 |         return err(err);
+    |                ~~~
+help: consider importing this tuple variant
+    |
+66  + use core::result::Result::Err;
+    |
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Ok` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:172:5
+    |
+172 |     Ok(size_out)
+    |     ^^ not found in this scope
+    |
+help: consider importing this tuple variant
+    |
+66  + use core::result::Result::Ok;
+    |
+
+error[E0412]: cannot find type `Result` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:175:41
+    |
+175 | fn check_constraints<U>(data: &[u8]) -> Result<usize, Error>
+    |                                         ^^^^^^ not found in this scope
+    |
+help: consider importing one of these items
+    |
+66  + use core::fmt::Result;
+    |
+66  + use core::result::Result;
+    |
+66  + use crate::fmt::Result;
+    |
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Ok` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:180:16
+    |
+180 |         return Ok(0);
+    |                ^^ not found in this scope
+    |
+help: consider importing this tuple variant
+    |
+66  + use core::result::Result::Ok;
+    |
+
+error: cannot find macro `assert_ne` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1279:3
+     |
+1279 |         assert_ne!(width, 0, "Chunk width cannot be 0");
+     |         ^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::assert_ne;
+     |
+3    + use crate::macros::internal::core::assert_ne;
+     |
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Ok` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:186:5
+    |
+186 |     Ok(data.len() / size_out)
+    |     ^^ not found in this scope
+    |
+help: consider importing this tuple variant
+    |
+66  + use core::result::Result::Ok;
+    |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1257:3
+     |
+1257 | #[derive(Clone, Debug)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error[E0405]: cannot find trait `Sized` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:329:11
+    |
+329 |     Self: Sized,
+    |           ^^^^^ not found in this scope
+    |
+help: consider importing this trait
+    |
+66  + use core::marker::Sized;
+    |
+
+error: cannot find macro `include_str` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1258:9
+     |
+1258 | #[doc = include_str!("../../doc/slice/iter/RChunksExact.md")]
+     |         ^^^^^^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::include_str;
+     |
+3    + use crate::macros::internal::core::include_str;
+     |
+
+error[E0405]: cannot find trait `AsRef` in this scope
+   --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/byte-slice-cast-1.2.2/src/lib.rs:333:27
+    |
+333 |     fn from_byte_slice<T: AsRef<[u8]> + ?Sized>(slice: &T) -> Result<&[Self], Error>;
+    |                           ^^^^^ not found in this scope
+    |
+help: consider importing this trait
+    |
+66  + use core::convert::AsRef;
+    |
+
+error: cannot find attribute `derive` in this scope
+    --> /home/codespace/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitvec-1.0.1/src/slice/iter.rs:1174:3
+     |
+1174 | #[derive(Debug)]
+     |   ^^^^^^
+     |
+help: consider importing one of these items
+     |
+3    + use core::prelude::rust_2024::derive;
+     |
+3    + use crate::macros::internal::core::prelude::rust_2024::derive;
+     |
+
+error[E0405]: cannot find trait `Sized` in this scope
+   --> /home/codespace/.cargo/registry/src/^C
+@ankushKun ➜ /workspaces/…/packages/contracts/market (main) $ 
