@@ -27,11 +27,11 @@ const main = async () => {
   const { api, account } = await initPolkadotJs(chain, `${accountUri}${derivationPath}`)
 
   // Deploy greeter contract
-  let { abi, wasm } = await getDeploymentData('greeter')
-  const greeter = await deployContract(api, account, abi, wasm, 'default', [])
+  let { abi, wasm } = await getDeploymentData('market')
+  const market = await deployContract(api, account, abi, wasm, 'default', [])
 
   // Write contract addresses to `{contract}/{network}.ts` file(s)
-  await writeContractAddresses(chain.network, { greeter })
+  await writeContractAddresses(chain.network, { market })
 }
 
 main()
