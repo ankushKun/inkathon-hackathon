@@ -95,12 +95,92 @@ mod market {
             assert!(self.seller_ids.contains(&buy_from), "Seller does not exist");
             assert!(self.items.contains(&item_id), "Item does not exist");
 
-            let itm = self.items.get(&item_id).unwrap();
+            let mut itm = self.items.get(&item_id).unwrap();
 
             assert!(
                 itm.current_supply < itm.max_supply || itm.owners.len() > 0,
                 "Item is not available for sale"
             );
+
+            if itm.current_supply + amt_to_buy <= itm.max_supply {
+                // mint new copies
+                assert!(itm.seller == buy_from, "Seller does not own the item");
+                let price_to_pay = amt_to_buy as u128 * itm.price;
+                assert!(
+                    self.env().transferred_value() >= price_to_pay,
+                    "Not enough funds to buy"
+                );
+                let remainder = self.env().transferred_value() - price_to_pay;
+                self.env().transfer(buy_from, price_to_pay).unwrap();
+                if remainder > 0 {
+                    self.env().transfer(self.env().caller(), remainder).unwrap();
+                }
+
+                itm.current_supply += amt_to_buy;
+                let mut already_owned = false;
+                for (i, (owner, copies_owned, copies_for_sale, price_per_copy)) in
+                    itm.owners.clone().iter().enumerate()
+                {
+                    if *owner == self.env().caller() {
+                        itm.owners[i].1 += amt_to_buy;
+                        already_owned = true;
+                    }
+                }
+                if !already_owned {
+                    itm.owners
+                        .push((self.env().caller(), amt_to_buy, 0, itm.price));
+                }
+            } else {
+                // transfer ownership
+                let mut owner_found = false;
+                for (i, (owner, copies_owned, copies_for_sale, price_per_copy)) in
+                    itm.owners.clone().iter().enumerate()
+                {
+                    if *owner == buy_from {
+                        assert!(
+                            *copies_owned >= amt_to_buy,
+                            "Not enough copies owned to sell"
+                        );
+                        assert!(
+                            *copies_for_sale >= amt_to_buy,
+                            "Not enough copies for sale to sell"
+                        );
+                        let price_to_pay = amt_to_buy as u128 * price_per_copy;
+                        assert!(
+                            self.env().transferred_value() >= price_to_pay,
+                            "Not enough funds to buy"
+                        );
+                        itm.owners[i].1 -= amt_to_buy;
+                        itm.owners[i].2 -= amt_to_buy;
+                        let remainder = self.env().transferred_value() - price_to_pay;
+                        self.env().transfer(buy_from, price_to_pay).unwrap();
+                        if remainder > 0 {
+                            self.env().transfer(self.env().caller(), remainder).unwrap();
+                        }
+                        owner_found = true;
+
+                        // transfer ownership
+                        let mut new_owner_found = false;
+                        for (j, (owner, copies_owned, copies_for_sale, price_per_copy)) in
+                            itm.owners.clone().iter().enumerate()
+                        {
+                            if *owner == self.env().caller() {
+                                itm.owners[j].1 += amt_to_buy;
+                                new_owner_found = true;
+                                break;
+                            }
+                        }
+                        if !new_owner_found {
+                            itm.owners
+                                .push((self.env().caller(), amt_to_buy, 0, itm.price));
+                        }
+                        break;
+                    }
+                }
+                if !owner_found {
+                    panic!("Seller does not own the item");
+                }
+            }
         }
 
         #[ink(message)]
@@ -110,6 +190,22 @@ mod market {
             copies_to_sell: u32,
             price_per_copy: u128,
         ) {
+            assert!(self.items.contains(&item_id), "Item does not exist");
+            let mut itm = self.items.get(&item_id).unwrap();
+
+            let mut already_owned = false;
+            for (i, (owner, copies_owned, copies_for_sale, old_price_per_copy)) in
+                itm.owners.clone().iter().enumerate()
+            {
+                if *owner == self.env().caller() {
+                    itm.owners[i].2 = copies_to_sell;
+                    itm.owners[i].3 = price_per_copy;
+                    already_owned = true;
+                }
+            }
+            if !already_owned {
+                panic!("Caller does not own the item");
+            }
         }
     }
 }

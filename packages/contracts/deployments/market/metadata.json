@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0xa20138b45e012e76b9030e60f41c9e5ee89ebffb25555cc5d05327ecee2563ab",
+    "hash": "0xe8dad11d94e4289a44b20061e46455a98937f3ffdc5e9d7e375cfc48bd9a07dc",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.73.0",
     "build_info": {
@@ -33,7 +33,7 @@
             "ink_primitives",
             "ConstructorResult"
           ],
-          "type": 7
+          "type": 10
         },
         "selector": "0xed4b9d1b"
       }
@@ -44,13 +44,13 @@
         "displayName": [
           "AccountId"
         ],
-        "type": 2
+        "type": 3
       },
       "balance": {
         "displayName": [
           "Balance"
         ],
-        "type": 11
+        "type": 2
       },
       "blockNumber": {
         "displayName": [
@@ -62,20 +62,20 @@
         "displayName": [
           "ChainExtension"
         ],
-        "type": 14
+        "type": 17
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 12
+        "type": 15
       },
       "maxEventTopics": 4,
       "timestamp": {
         "displayName": [
           "Timestamp"
         ],
-        "type": 13
+        "type": 16
       }
     },
     "events": [
@@ -95,12 +95,34 @@
           {
             "docs": [],
             "indexed": false,
+            "label": "game",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "uri",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
             "label": "price",
             "type": {
               "displayName": [
-                "u32"
+                "u128"
               ],
-              "type": 0
+              "type": 2
             }
           },
           {
@@ -128,12 +150,23 @@
           {
             "docs": [],
             "indexed": false,
-            "label": "supplier",
+            "label": "seller",
             "type": {
               "displayName": [
                 "AccountId"
               ],
-              "type": 2
+              "type": 3
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "label": "owners",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 6
             }
           }
         ],
@@ -146,11 +179,99 @@
         "ink",
         "LangError"
       ],
-      "type": 9
+      "type": 12
     },
     "messages": [
       {
         "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get_all_suppliers",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 13
+        },
+        "selector": "0x818c2cee"
+      },
+      {
+        "args": [
+          {
+            "label": "supplier",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "get_supplier_items",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 14
+        },
+        "selector": "0x87c46837"
+      },
+      {
+        "args": [
+          {
+            "label": "name",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "game",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "uri",
+            "type": {
+              "displayName": [
+                "String"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "label": "price",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "label": "max_supply",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 0
+            }
+          }
+        ],
         "default": false,
         "docs": [],
         "label": "new_item",
@@ -164,6 +285,94 @@
           "type": 10
         },
         "selector": "0x1f29baa9"
+      },
+      {
+        "args": [
+          {
+            "label": "buy_from",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "label": "item_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "amt_to_buy",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "buy_item",
+        "mutates": true,
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xd3d19cfc"
+      },
+      {
+        "args": [
+          {
+            "label": "item_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "copies_to_sell",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 0
+            }
+          },
+          {
+            "label": "price_per_copy",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "default": false,
+        "docs": [],
+        "label": "set_item_for_sale",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 10
+        },
+        "selector": "0xea2f099d"
       }
     ]
   },
@@ -200,7 +409,25 @@
                           "layout": {
                             "leaf": {
                               "key": "0x751cda2b",
-                              "ty": 0
+                              "ty": 1
+                            }
+                          },
+                          "name": "game"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x751cda2b",
+                              "ty": 1
+                            }
+                          },
+                          "name": "uri"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x751cda2b",
+                              "ty": 2
                             }
                           },
                           "name": "price"
@@ -227,10 +454,19 @@
                           "layout": {
                             "leaf": {
                               "key": "0x751cda2b",
-                              "ty": 2
+                              "ty": 3
                             }
                           },
-                          "name": "supplier"
+                          "name": "seller"
+                        },
+                        {
+                          "layout": {
+                            "leaf": {
+                              "key": "0x751cda2b",
+                              "ty": 6
+                            }
+                          },
+                          "name": "owners"
                         }
                       ],
                       "name": "Item"
@@ -246,14 +482,23 @@
                 "root": {
                   "layout": {
                     "leaf": {
-                      "key": "0x57df68d4",
-                      "ty": 5
+                      "key": "0x1d2dcb2e",
+                      "ty": 8
                     }
                   },
-                  "root_key": "0x57df68d4"
+                  "root_key": "0x1d2dcb2e"
                 }
               },
-              "name": "owners"
+              "name": "sellers_2_item"
+            },
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0x00000000",
+                  "ty": 9
+                }
+              },
+              "name": "seller_ids"
             }
           ],
           "name": "Market"
@@ -283,10 +528,18 @@
       "id": 2,
       "type": {
         "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": {
+        "def": {
           "composite": {
             "fields": [
               {
-                "type": 3,
+                "type": 4,
                 "typeName": "[u8; 32]"
               }
             ]
@@ -300,21 +553,13 @@
       }
     },
     {
-      "id": 3,
+      "id": 4,
       "type": {
         "def": {
           "array": {
             "len": 32,
-            "type": 4
+            "type": 5
           }
-        }
-      }
-    },
-    {
-      "id": 4,
-      "type": {
-        "def": {
-          "primitive": "u8"
         }
       }
     },
@@ -322,9 +567,7 @@
       "id": 5,
       "type": {
         "def": {
-          "sequence": {
-            "type": 6
-          }
+          "primitive": "u8"
         }
       }
     },
@@ -332,10 +575,9 @@
       "id": 6,
       "type": {
         "def": {
-          "tuple": [
-            0,
-            0
-          ]
+          "sequence": {
+            "type": 7
+          }
         }
       }
     },
@@ -343,12 +585,45 @@
       "id": 7,
       "type": {
         "def": {
+          "tuple": [
+            3,
+            0,
+            0,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "sequence": {
+            "type": 3
+          }
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
           "variant": {
             "variants": [
               {
                 "fields": [
                   {
-                    "type": 8
+                    "type": 11
                   }
                 ],
                 "index": 0,
@@ -357,7 +632,7 @@
               {
                 "fields": [
                   {
-                    "type": 9
+                    "type": 12
                   }
                 ],
                 "index": 1,
@@ -369,11 +644,11 @@
         "params": [
           {
             "name": "T",
-            "type": 8
+            "type": 11
           },
           {
             "name": "E",
-            "type": 9
+            "type": 12
           }
         ],
         "path": [
@@ -382,7 +657,7 @@
       }
     },
     {
-      "id": 8,
+      "id": 11,
       "type": {
         "def": {
           "tuple": []
@@ -390,7 +665,7 @@
       }
     },
     {
-      "id": 9,
+      "id": 12,
       "type": {
         "def": {
           "variant": {
@@ -409,7 +684,7 @@
       }
     },
     {
-      "id": 10,
+      "id": 13,
       "type": {
         "def": {
           "variant": {
@@ -417,7 +692,7 @@
               {
                 "fields": [
                   {
-                    "type": 0
+                    "type": 9
                   }
                 ],
                 "index": 0,
@@ -426,7 +701,7 @@
               {
                 "fields": [
                   {
-                    "type": 9
+                    "type": 12
                   }
                 ],
                 "index": 1,
@@ -438,11 +713,11 @@
         "params": [
           {
             "name": "T",
-            "type": 0
+            "type": 9
           },
           {
             "name": "E",
-            "type": 9
+            "type": 12
           }
         ],
         "path": [
@@ -451,21 +726,55 @@
       }
     },
     {
-      "id": 11,
+      "id": 14,
       "type": {
         "def": {
-          "primitive": "u128"
-        }
+          "variant": {
+            "variants": [
+              {
+                "fields": [
+                  {
+                    "type": 8
+                  }
+                ],
+                "index": 0,
+                "name": "Ok"
+              },
+              {
+                "fields": [
+                  {
+                    "type": 12
+                  }
+                ],
+                "index": 1,
+                "name": "Err"
+              }
+            ]
+          }
+        },
+        "params": [
+          {
+            "name": "T",
+            "type": 8
+          },
+          {
+            "name": "E",
+            "type": 12
+          }
+        ],
+        "path": [
+          "Result"
+        ]
       }
     },
     {
-      "id": 12,
+      "id": 15,
       "type": {
         "def": {
           "composite": {
             "fields": [
               {
-                "type": 3,
+                "type": 4,
                 "typeName": "[u8; 32]"
               }
             ]
@@ -479,7 +788,7 @@
       }
     },
     {
-      "id": 13,
+      "id": 16,
       "type": {
         "def": {
           "primitive": "u64"
@@ -487,7 +796,7 @@
       }
     },
     {
-      "id": 14,
+      "id": 17,
       "type": {
         "def": {
           "variant": {}
