@@ -45,7 +45,7 @@ export const ChainInfo: FC = () => {
 
   return (
     <>
-      <div tw="flex grow flex-col space-y-4 max-w-[20rem]">
+      <div tw="flex flex-col space-y-4 max-w-[20rem]">
         <h2 tw="text-center font-mono text-gray-400">Chain Info</h2>
 
         <Card variant="outline" p={4} bgColor="whiteAlpha.100">
