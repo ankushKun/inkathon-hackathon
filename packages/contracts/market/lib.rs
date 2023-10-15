@@ -29,6 +29,7 @@ mod market {
         items: Mapping<u32, Item>,                    // id => item
         sellers_2_item: Mapping<AccountId, Vec<u32>>, // account => item_id
         seller_ids: Vec<AccountId>,
+        owners: Mapping<AccountId, Vec<(u32, u32)>>, // account => item_id, copies_owned
     }
 
     impl Market {
@@ -39,7 +40,27 @@ mod market {
                 items: Default::default(),
                 sellers_2_item: Default::default(),
                 seller_ids: Default::default(),
+                owners: Default::default(),
             }
+        }
+
+        #[ink(message)]
+        pub fn get_item_count(&self) -> u32 {
+            self.count
+        }
+
+        #[ink(message)]
+        pub fn get_specific_items(&self, item_ids: Vec<u32>) -> Vec<Item> {
+            let mut items = Vec::new();
+            for item_id in item_ids {
+                items.push(self.items.get(&item_id).unwrap());
+            }
+            items
+        }
+
+        #[ink(message)]
+        pub fn get_item(&self, item_id: u32) -> Item {
+            self.items.get(&item_id).unwrap()
         }
 
         #[ink(message)]
@@ -53,6 +74,11 @@ mod market {
         }
 
         #[ink(message)]
+        pub fn get_owned_items(&self, owner: AccountId) -> Vec<(u32, u32)> {
+            self.owners.get(owner).unwrap_or_default()
+        }
+
+        #[ink(message)]
         pub fn new_item(
             &mut self,
             name: String,
@@ -60,7 +86,7 @@ mod market {
             uri: String,
             price: u128,
             max_supply: u32,
-        ) {
+        ) -> u32 {
             self.count += 1;
 
             // define a new item and add it to items mapping
@@ -88,6 +114,8 @@ mod market {
             if !self.seller_ids.contains(&self.env().caller()) {
                 self.seller_ids.push(self.env().caller());
             }
+
+            self.count
         }
 
         #[ink(message, payable)]
@@ -102,6 +130,7 @@ mod market {
                 "Item is not available for sale"
             );
 
+            let mut bought = false;
             if itm.current_supply + amt_to_buy <= itm.max_supply {
                 // mint new copies
                 assert!(itm.seller == buy_from, "Seller does not own the item");
@@ -130,6 +159,8 @@ mod market {
                     itm.owners
                         .push((self.env().caller(), amt_to_buy, 0, itm.price));
                 }
+
+                bought = true;
             } else {
                 // transfer ownership
                 let mut owner_found = false;
@@ -167,18 +198,55 @@ mod market {
                             if *owner == self.env().caller() {
                                 itm.owners[j].1 += amt_to_buy;
                                 new_owner_found = true;
+                                bought = true;
                                 break;
                             }
                         }
                         if !new_owner_found {
                             itm.owners
                                 .push((self.env().caller(), amt_to_buy, 0, itm.price));
+                            bought = true;
                         }
                         break;
                     }
                 }
                 if !owner_found {
                     panic!("Seller does not own the item");
+                }
+            }
+            if bought {
+                // add the item to owners mapping
+                let mut items_ids = self.owners.get(self.env().caller()).unwrap_or_default();
+                let mut already_owned = false;
+                for (i, (owned_item_id, copies_owned)) in items_ids.clone().iter().enumerate() {
+                    if item_id == *owned_item_id {
+                        items_ids[i].1 += amt_to_buy;
+                        already_owned = true;
+                    }
+                }
+                if !already_owned {
+                    items_ids.push((item_id, amt_to_buy));
+                } else {
+                    items_ids.retain(|(_, copies_owned)| *copies_owned > 0);
+                }
+                self.owners.insert(self.env().caller(), &items_ids);
+
+                // decrement if it was owned by someone else
+                if buy_from != itm.seller {
+                    let mut items_ids = self.owners.get(buy_from).unwrap_or_default();
+                    let mut already_owned = false;
+                    for (i, (owned_item_id, copies_owned)) in items_ids.clone().iter().enumerate() {
+                        if item_id == *owned_item_id {
+                            items_ids[i].1 -= amt_to_buy;
+                            already_owned = true;
+                        }
+                    }
+                    if !already_owned {
+                        items_ids.push((item_id, amt_to_buy));
+                    } else {
+                        items_ids.retain(|(_, copies_owned)| *copies_owned > 0);
+                    }
+                    self.owners.insert(buy_from, &items_ids);
                 }
             }
         }
