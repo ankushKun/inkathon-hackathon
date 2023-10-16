@@ -58,6 +58,11 @@ mod market {
             items
         }
 
+        // #[ink(message)]
+        // pub fn get_all_items(&self) -> Mapping<u32, Item> {
+        //     self.items
+        // }
+
         #[ink(message)]
         pub fn get_item(&self, item_id: u32) -> Item {
             self.items.get(&item_id).unwrap()
@@ -79,6 +84,15 @@ mod market {
         }
 
         #[ink(message)]
+        pub fn get_all_items(&self) -> Vec<Item> {
+            let mut items = Vec::new();
+            for i in 0..self.count {
+                items.push(self.items.get(&i).unwrap());
+            }
+            items
+        }
+
+        #[ink(message)]
         pub fn new_item(
             &mut self,
             name: String,
@@ -87,8 +101,6 @@ mod market {
             price: u128,
             max_supply: u32,
         ) -> u32 {
-            self.count += 1;
-
             // define a new item and add it to items mapping
             let itm = Item {
                 name,
@@ -114,8 +126,8 @@ mod market {
             if !self.seller_ids.contains(&self.env().caller()) {
                 self.seller_ids.push(self.env().caller());
             }
-
-            self.count
+            self.count += 1;
+            self.count - 1
         }
 
         #[ink(message, payable)]

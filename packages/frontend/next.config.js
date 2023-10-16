@@ -5,7 +5,11 @@
 /**
  * @type {import('next').NextConfig}
  **/
-let nextConfig = {}
+let nextConfig = {
+  images: {
+    domains: ['assets.pokemon.com'],
+  },
+}
 
 const withTwin = require('./withTwin.js')
 nextConfig = withTwin(nextConfig)

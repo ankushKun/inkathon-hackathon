@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react'
 import { ChainInfo } from '@components/web3/ChainInfo'
 import { ConnectButton } from '@components/web3/ConnectButton'
 import { ContractIds } from '@deployments/deployments'
@@ -9,19 +10,118 @@ import {
   useRegisteredContract,
 } from '@scio-labs/use-inkathon'
 import { contractTxWithToast } from '@utils/contractTxWithToast'
-import { useState } from 'react'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import 'twin.macro'
 
-export default function Game() {
-  const { api, activeAccount, activeSigner } = useInkathon()
-  const { contract, address: contractAddress } = useRegisteredContract(ContractIds.Market)
+type Item = {
+  name: string
+  game: string
+  uri: string
+  price: string
+  maxSupply: string
+  currentSupply: string
+  seller: string
+  owners: string[]
+}
 
-  const [fetchIsLoading, setFetchIsLoading] = useState<boolean>(false)
-  const [updateIsLoading, setUpdateIsLoading] = useState<boolean>(false)
+export default function Game() {
+  const { api, activeAccount, activeSigner, activeChain } = useInkathon()
+  const { contract, address: contractAddress } = useRegisteredContract(ContractIds.Market)
+  const [chainInfo, setChainInfo] = useState<{ [_: string]: any }>()
+
+  const [allPokemons, setAllPokemons] = useState<Item[]>([])
+
+  const PokemonShopItem = ({
+    img,
+    name,
+    price,
+    item_id,
+    seller,
+  }: {
+    img: string
+    name: string
+    price: number
+    item_id: number
+    seller: string
+  }) => {
+    return (
+      <div tw="relative my-2 flex rounded-xl bg-white/10 py-1">
+        <Image src={img} width={69} height={69} alt="pokemon" tw="h-20 w-20 p-2" />
+        <div tw="grow pr-2 text-right">
+          <div tw="font-bold">{name}</div>
+          <div tw="">
+            {price} {chainInfo?.Token}
+          </div>
+          <Button
+            tw="ml-auto block rounded-lg px-2 font-bold"
+            marginLeft="auto"
+            colorScheme="purple"
+            size="sm"
+          >
+            buy
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  const MyPokemon = ({
+    img,
+    name,
+    price,
+    item_id,
+    seller,
+  }: {
+    img: string
+    name: string
+    price: number
+    item_id: number
+    seller: string
+  }) => {
+    return (
+      <div tw="relative my-2 flex rounded-xl bg-white/10 py-1">
+        <Image src={img} width={69} height={69} alt="pokemon" tw="h-20 w-20 p-2" />
+        <div tw="grow pr-2 text-right">
+          <div tw="font-bold">{name}</div>
+          {/* <div tw="">{price} {chainInfo?.Token}</div> */}
+          <Button
+            tw="absolute bottom-2 right-2 ml-auto block rounded-lg px-2 font-bold"
+            marginLeft="auto"
+            colorScheme="purple"
+            size="sm"
+          >
+            use in battle
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  const fetchChainInfo = async () => {
+    if (!api) {
+      setChainInfo(undefined)
+      return
+    }
+
+    const chain = (await api.rpc.system.chain())?.toString() || ''
+    const version = (await api.rpc.system.version())?.toString() || ''
+    const properties = ((await api.rpc.system.properties())?.toHuman() as any) || {}
+    const tokenSymbol = properties?.tokenSymbol?.[0] || 'UNIT'
+    const tokenDecimals = properties?.tokenDecimals?.[0] || 12
+    const chainInfo = {
+      Chain: chain,
+      Version: version,
+      Token: `${tokenSymbol}`,
+    }
+    setChainInfo(chainInfo)
+  }
+  useEffect(() => {
+    fetchChainInfo()
+  }, [api])
 
   const fetchItemCount = async () => {
     if (!contract || !api) return
-    setFetchIsLoading(true)
     try {
       const result = await contractQuery(api, '', contract, 'get_item_count')
       const { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_item_count')
@@ -34,7 +134,6 @@ export default function Game() {
 
   const fetchSpecificItems = async ({ item_id }: { item_id: number[] }) => {
     if (!contract || !api) return
-    setFetchIsLoading(true)
     try {
       const result = await contractQuery(api, '', contract, 'get_item', {}, [item_id])
       const { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_item')
@@ -47,7 +146,6 @@ export default function Game() {
 
   const fetchItem = async ({ item_id }: { item_id: number }) => {
     if (!contract || !api) return
-    setFetchIsLoading(true)
     try {
       const result = await contractQuery(api, '', contract, 'get_item', {}, [item_id])
       const { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_item')
@@ -58,9 +156,22 @@ export default function Game() {
     }
   }
 
+  const fetchAllItems = async () => {
+    if (!contract || !api) return
+    try {
+      console.log('fetching all items')
+      const result = await contractQuery(api, '', contract, 'get_all_items')
+      const { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_all_items')
+      if (isError) throw new Error(decodedOutput)
+      console.log(output)
+      setAllPokemons(output)
+    } catch (e) {
+      console.log('error', e)
+    }
+  }
+
   const fetchAllSuppliers = async () => {
     if (!contract || !api) return
-    setFetchIsLoading(true)
     try {
       const result = await contractQuery(api, '', contract, 'get_all_suppliers')
       const { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_all_suppliers')
@@ -73,7 +184,6 @@ export default function Game() {
 
   const fetchSupplierItems = async ({ supplier_address }: { supplier_address: string }) => {
     if (!contract || !api) return
-    setFetchIsLoading(true)
     try {
       const result = await contractQuery(api, '', contract, 'get_supplier_items', {}, [
         supplier_address,
@@ -92,7 +202,6 @@ export default function Game() {
 
   const fetchOwnedItems = async ({ owner_address }: { owner_address: string }) => {
     if (!contract || !api) return
-    setFetchIsLoading(true)
     try {
       const result = await contractQuery(api, '', contract, 'get_owned_items', {}, [owner_address])
       const { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_owned_items')
@@ -120,7 +229,6 @@ export default function Game() {
       console.log('error')
       return
     }
-    setUpdateIsLoading(true)
     try {
       const itm_id = await contractTxWithToast(
         api,
@@ -134,7 +242,7 @@ export default function Game() {
     } catch (e) {
       console.error(e)
     } finally {
-      setUpdateIsLoading(false)
+      /* empty */
     }
   }
 
@@ -151,7 +259,6 @@ export default function Game() {
       console.log('error')
       return
     }
-    setUpdateIsLoading(true)
     try {
       await contractTxWithToast(api, activeAccount.address, contract, 'buy_item', {}, [
         buy_from,
@@ -161,7 +268,7 @@ export default function Game() {
     } catch (e) {
       console.error(e)
     } finally {
-      setUpdateIsLoading(false)
+      /* empty */
     }
   }
 
@@ -178,7 +285,6 @@ export default function Game() {
       console.log('error')
       return
     }
-    setUpdateIsLoading(true)
     try {
       await contractTxWithToast(api, activeAccount.address, contract, 'set_item_for_sale', {}, [
         item_id,
@@ -188,21 +294,44 @@ export default function Game() {
     } catch (e) {
       console.error(e)
     } finally {
-      setUpdateIsLoading(false)
+      /* empty */
     }
   }
+
+  useEffect(() => {
+    fetchAllItems()
+  }, [api, contract])
 
   return (
     <div tw="flex h-screen justify-evenly gap-3 bg-gray-800 p-3">
       {/* LEFT PANEL (POKEMON SHOP) */}
-      <div tw="w-1/6 rounded-2xl bg-black/60 p-2 px-3">left</div>
+      <div tw="w-1/6 rounded-2xl bg-black/60 p-2 px-3">
+        <div tw="rounded-xl bg-white/10 text-center">Pokemon Shop</div>
+        {allPokemons.map((item, index) => {
+          console.log(item)
+          return (
+            <PokemonShopItem
+              key={index}
+              img={item.uri}
+              name={item.name}
+              price={parseInt(item.price)}
+              item_id={index}
+              seller={item.seller}
+            />
+          )
+        })}
+      </div>
       {/* MIDDLE WINDOW (GAME) */}
       <div tw="flex grow flex-col items-center justify-center rounded-2xl bg-black/80 p-2 px-3">
         <ConnectButton />
         <ChainInfo />
+        <Button margin={3}>Start Game</Button>
       </div>
       {/* RIGHT PANEL (OWNED POKEMONS) */}
-      <div tw="w-1/6 rounded-2xl bg-black/60 p-2 px-3">right</div>
+      <div tw="w-1/6 rounded-2xl bg-black/60 p-2 px-3">
+        <div tw="rounded-xl bg-white/10 text-center">My Pokemons</div>
+        <MyPokemon img="/pokeball.png" name="Pokeball" price={1} item_id={0} seller="self" />
+      </div>
     </div>
   )
 }

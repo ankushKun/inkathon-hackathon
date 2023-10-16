@@ -4,7 +4,9 @@ import { getDeploymentData } from './utils/getDeploymentData'
 import { initPolkadotJs } from './utils/initPolkadotJs'
 import { writeContractAddresses } from './utils/writeContractAddresses'
 
+dotenv.config({ path: '.env' })
 // Dynamic environment variables
+console.log(process.env.CHAIN)
 const chainId = process.env.CHAIN || 'development'
 dotenv.config({ path: `.env.${process.env.CHAIN || 'development'}` })
 
