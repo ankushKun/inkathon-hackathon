@@ -23,6 +23,7 @@ type Item = {
   currentSupply: string
   seller: string
   owners: string[]
+  // itemId: string
 }
 
 export default function Game() {
@@ -33,6 +34,14 @@ export default function Game() {
   const [allPokemons, setAllPokemons] = useState<Item[]>([])
   const [ownedPokemons, setOwnedPokemons] = useState<Item[]>([])
   const [selectedPokemon, setSelectedPokemon] = useState<Item>()
+  const [opponentPokemon, setOpponentPokemon] = useState<Item>()
+  const [playing, setPlaying] = useState(false)
+
+  function StartGame() {
+    if (!selectedPokemon) return
+    setOpponentPokemon(allPokemons[Math.floor(Math.random() * allPokemons.length)])
+    setPlaying(true)
+  }
 
   const PokemonShopItem = ({
     img,
@@ -61,7 +70,7 @@ export default function Game() {
             colorScheme="purple"
             size="sm"
             onClick={() => {
-              buyItem({ buy_from: seller, item_id, amt_to_buy: 1 })
+              buyItem({ buy_from: seller, item_id, amt_to_buy: 1, price })
             }}
           >
             buy
@@ -95,6 +104,10 @@ export default function Game() {
             marginLeft="auto"
             colorScheme="purple"
             size="sm"
+            onClick={() => {
+              console.log(ownedPokemons[item_id])
+              setSelectedPokemon(ownedPokemons[item_id])
+            }}
           >
             use in battle
           </Button>
@@ -137,10 +150,10 @@ export default function Game() {
     }
   }
 
-  const fetchSpecificItems = async ({ item_id }: { item_id: number[] }) => {
+  const fetchSpecificItems = async ({ item_ids }: { item_ids: number[] }) => {
     if (!contract || !api) return
     try {
-      const result = await contractQuery(api, '', contract, 'get_item', {}, [item_id])
+      const result = await contractQuery(api, '', contract, 'get_item', {}, [item_ids])
       const { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_item')
       if (isError) throw new Error(decodedOutput)
       console.log(output)
@@ -208,10 +221,20 @@ export default function Game() {
   const fetchOwnedItems = async (owner_address: string) => {
     if (!contract || !api) return
     try {
-      const result = await contractQuery(api, '', contract, 'get_owned_items', {}, [owner_address])
-      const { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_owned_items')
-      if (isError) throw new Error(decodedOutput)
+      console.log('fetching owned items')
+      let result = await contractQuery(api, '', contract, 'get_owned_items', {}, [owner_address])
+      let { output, isError, decodedOutput } = decodeOutput(result, contract, 'get_owned_items')
+      // console.log(output)
+
+      const itm_ids = output.map((item: any) => item[0])
+      // console.log(itm_ids)
+
+      result = await contractQuery(api, '', contract, 'get_specific_items', {}, [itm_ids])
+      ;({ output, isError, decodedOutput } = decodeOutput(result, contract, 'get_specific_items'))
+
       console.log(output)
+
+      if (isError) throw new Error(decodedOutput)
       setOwnedPokemons(output)
     } catch (e) {
       console.log('error', e)
@@ -256,21 +279,28 @@ export default function Game() {
     buy_from,
     item_id,
     amt_to_buy,
+    price,
   }: {
     buy_from: string
     item_id: number
     amt_to_buy: number
+    price: number
   }) => {
     if (!activeAccount || !contract || !activeSigner || !api) {
       console.log('error')
       return
     }
     try {
-      await contractTxWithToast(api, activeAccount.address, contract, 'buy_item', {}, [
-        buy_from,
-        item_id,
-        amt_to_buy,
-      ])
+      await contractTxWithToast(
+        api,
+        activeAccount.address,
+        contract,
+        'buy_item',
+        {
+          value: amt_to_buy * price,
+        },
+        [buy_from, item_id, amt_to_buy],
+      )
     } catch (e) {
       console.error(e)
     } finally {
@@ -304,14 +334,24 @@ export default function Game() {
     }
   }
 
-  useEffect(() => {
-    fetchAllItems()
-  }, [api, contract])
+  // useEffect(() => {
+  //   fetchAllItems()
+  // }, [api, contract])
+
+  // useEffect(() => {
+  //   if (!activeAccount) return
+  //   fetchOwnedItems(activeAccount.address)
+  // }, [api, contract])
 
   useEffect(() => {
-    if (!activeAccount) return
-    fetchOwnedItems(activeAccount.address)
-  }, [api, contract])
+    function update() {
+      fetchAllItems()
+      if (activeAccount) fetchOwnedItems(activeAccount.address)
+    }
+    const interval = setInterval(update, 10000)
+    update()
+    return () => clearInterval(interval)
+  }, [api, contract, activeAccount])
 
   return (
     <div tw="flex h-screen justify-evenly gap-3 bg-gray-800 p-3">
@@ -319,7 +359,7 @@ export default function Game() {
       <div tw="w-1/6 rounded-2xl bg-black/60 p-2 px-3">
         <div tw="rounded-xl bg-white/10 text-center">Pokemon Shop</div>
         {allPokemons.map((item, index) => {
-          console.log(item)
+          // console.log(item)
           return (
             <PokemonShopItem
               key={index}
@@ -334,15 +374,90 @@ export default function Game() {
       </div>
       {/* MIDDLE WINDOW (GAME) */}
       <div tw="flex grow flex-col items-center justify-center rounded-2xl bg-black/80 p-2 px-3">
-        <ConnectButton />
-        <ChainInfo />
-        <Button margin={3}>Start Game</Button>
+        {!playing ? (
+          <>
+            <ConnectButton />
+            <ChainInfo />
+            <div>
+              {selectedPokemon && (
+                <div tw="flex flex-col items-center justify-center">
+                  <Image
+                    src={selectedPokemon.uri}
+                    width={69}
+                    height={69}
+                    alt="pokemon"
+                    tw="h-20 w-20 p-2"
+                  />
+                  <div>
+                    <span tw="font-bold">{selectedPokemon.name}</span> is selected
+                  </div>
+                  {/* <div tw="">{selectedPokemon.price} {chainInfo?.Token}</div> */}
+                </div>
+              )}
+            </div>
+            <Button
+              margin={3}
+              color="Highlight"
+              onClick={StartGame}
+              disabled={selectedPokemon ? false : true}
+            >
+              Battle
+            </Button>
+          </>
+        ) : (
+          <div tw="flex h-full w-full flex-col items-center justify-evenly gap-5">
+            <div tw="flex w-full grow justify-end">
+              {opponentPokemon && (
+                <div tw="flex flex-col items-center">
+                  <div tw="font-bold">{opponentPokemon.name}</div>
+                  <Image
+                    src={opponentPokemon.uri}
+                    width={256}
+                    height={256}
+                    alt="pokemon"
+                    tw="p-2"
+                  />
+                  <div tw="h-5 w-full rounded-full bg-black ring-2 ring-white/20">
+                    <div tw="h-5 rounded-full bg-green-500 w-[50%]"></div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div tw="flex w-full grow justify-start">
+              <div tw="flex flex-col justify-evenly gap-5 p-5">
+                <Button>Attack</Button>
+                <Button>Defend</Button>
+                <Button
+                  onClick={() => {
+                    setSelectedPokemon(undefined)
+                    setOpponentPokemon(undefined)
+                    setPlaying(false)
+                  }}
+                >
+                  Forefeit
+                </Button>
+              </div>
+              {selectedPokemon && (
+                <div tw="flex flex-col items-center">
+                  <Image
+                    src={selectedPokemon.uri}
+                    width={256}
+                    height={256}
+                    alt="pokemon"
+                    tw="p-2"
+                  />
+                  <div tw="font-bold">{selectedPokemon.name}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
       {/* RIGHT PANEL (OWNED POKEMONS) */}
       <div tw="w-1/6 rounded-2xl bg-black/60 p-2 px-3">
         <div tw="rounded-xl bg-white/10 text-center">My Pokemons</div>
         {ownedPokemons.map((item, index) => {
-          console.log(item)
+          // console.log(item)
           return (
             <MyPokemon
               key={index}
