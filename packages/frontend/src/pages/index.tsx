@@ -37,10 +37,67 @@ export default function Game() {
   const [opponentPokemon, setOpponentPokemon] = useState<Item>()
   const [playing, setPlaying] = useState(false)
 
+  const [opponentHealth, setOpponentHealth] = useState(80)
+  const [playerHealth, setPlayerHealth] = useState(100)
+  const [playerTurn, setPlayerTurn] = useState(true)
+
+  const [playInterval, setPlayInterval] = useState<NodeJS.Timeout>()
+  const [waitForPlayer, setWaitForPlayer] = useState(true)
+
   function StartGame() {
     if (!selectedPokemon) return
     setOpponentPokemon(allPokemons[Math.floor(Math.random() * allPokemons.length)])
+    setOpponentHealth(100)
+    setPlayerHealth(100)
     setPlaying(true)
+    setPlayerTurn(true)
+    setWaitForPlayer(true)
+
+    const interval = setInterval(() => {}, 1000)
+    setPlayInterval(interval)
+  }
+
+  function Forefeit() {
+    setSelectedPokemon(undefined)
+    setOpponentPokemon(undefined)
+    setPlaying(false)
+    setPlayerTurn(true)
+    setWaitForPlayer(true)
+    clearInterval(playInterval)
+  }
+
+  function Attack() {
+    if (!selectedPokemon || !opponentPokemon) return
+    if (playerTurn) {
+      const oh = parseInt((opponentHealth - Math.random() * 10).toString())
+      if (oh <= 0) {
+        setOpponentHealth(0)
+        alert('You won!')
+        Forefeit()
+      } else setOpponentHealth(oh)
+    } else {
+      const ph = parseInt((playerHealth - Math.random() * 10).toString())
+      if (ph <= 0) {
+        setPlayerHealth(0)
+        alert('You lost!')
+        Forefeit()
+      } else setPlayerHealth(ph)
+    }
+    setPlayerTurn(!playerTurn)
+  }
+
+  function Defend() {
+    if (!selectedPokemon || !opponentPokemon) return
+    if (playerTurn) {
+      const ph = parseInt((playerHealth + Math.random() * 10).toString())
+      if (ph > 100) setPlayerHealth(100)
+      else setPlayerHealth(ph)
+    } else {
+      const oh = parseInt((opponentHealth + Math.random() * 10).toString())
+      if (oh > 100) setOpponentHealth(100)
+      else setOpponentHealth(oh)
+    }
+    setPlayerTurn(!playerTurn)
   }
 
   const PokemonShopItem = ({
@@ -383,10 +440,10 @@ export default function Game() {
                 <div tw="flex flex-col items-center justify-center">
                   <Image
                     src={selectedPokemon.uri}
-                    width={69}
-                    height={69}
+                    width={200}
+                    height={200}
                     alt="pokemon"
-                    tw="h-20 w-20 p-2"
+                    tw="p-2"
                   />
                   <div>
                     <span tw="font-bold">{selectedPokemon.name}</span> is selected
@@ -418,35 +475,62 @@ export default function Game() {
                     tw="p-2"
                   />
                   <div tw="h-5 w-full rounded-full bg-black ring-2 ring-white/20">
-                    <div tw="h-5 rounded-full bg-green-500 w-[50%]"></div>
+                    <div
+                      tw="h-5 rounded-full"
+                      style={{
+                        width: `${opponentHealth}%`,
+                        backgroundColor:
+                          opponentHealth >= 60
+                            ? 'lightgreen'
+                            : opponentHealth > 25
+                            ? 'yellow'
+                            : 'red',
+                      }}
+                    ></div>
                   </div>
                 </div>
               )}
             </div>
             <div tw="flex w-full grow justify-start">
               <div tw="flex flex-col justify-evenly gap-5 p-5">
-                <Button>Attack</Button>
-                <Button>Defend</Button>
                 <Button
                   onClick={() => {
-                    setSelectedPokemon(undefined)
-                    setOpponentPokemon(undefined)
-                    setPlaying(false)
+                    Attack()
+                    Attack()
                   }}
                 >
-                  Forefeit
+                  Attack
                 </Button>
+                <Button
+                  onClick={() => {
+                    Defend()
+                    Defend()
+                  }}
+                >
+                  Defend
+                </Button>
+                <Button onClick={Forefeit}>Forefeit</Button>
               </div>
               {selectedPokemon && (
                 <div tw="flex flex-col items-center">
+                  <div tw="font-bold">{selectedPokemon.name}</div>
                   <Image
                     src={selectedPokemon.uri}
                     width={256}
                     height={256}
-                    alt="pokemon"
+                    alt={selectedPokemon.name}
                     tw="p-2"
                   />
-                  <div tw="font-bold">{selectedPokemon.name}</div>
+                  <div tw="h-5 w-full rounded-full bg-black ring-2 ring-white/20">
+                    <div
+                      tw="h-5 rounded-full"
+                      style={{
+                        width: `${playerHealth}%`,
+                        backgroundColor:
+                          playerHealth >= 60 ? 'lightgreen' : playerHealth > 25 ? 'yellow' : 'red',
+                      }}
+                    ></div>
+                  </div>
                 </div>
               )}
             </div>
