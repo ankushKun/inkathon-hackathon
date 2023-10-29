@@ -3,9 +3,6 @@
   "framework": "nextjs",
   "buildCommand": "pnpm build",
   "devCommand": "pnpm dev",
-  "installCommand": "HUSKY=0 pnpm install --no-frozen-lockfile",
-  "ignoreCommand": "",
-  "github": {
-    "silent": true
-  }
+  "outputDirectory": "./packages/frontend/.next",
+  "installCommand": "HUSKY=0 pnpm install --no-frozen-lockfile"
 }
