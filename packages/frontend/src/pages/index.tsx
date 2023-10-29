@@ -52,9 +52,6 @@ export default function Game() {
     setPlaying(true)
     setPlayerTurn(true)
     setWaitForPlayer(true)
-
-    const interval = setInterval(() => {}, 1000)
-    setPlayInterval(interval)
   }
 
   function Forefeit() {
@@ -115,7 +112,13 @@ export default function Game() {
   }) => {
     return (
       <div tw="relative my-2 flex rounded-xl bg-white/10 py-1">
-        <Image src={img} width={69} height={69} alt="pokemon" tw="h-20 w-20 p-2" />
+        <Image
+          src={img}
+          width={69}
+          height={69}
+          alt="pokemon"
+          tw="h-20 w-20 -scale-x-100 transform p-2"
+        />
         <div tw="grow pr-2 text-right">
           <div tw="font-bold">{name}</div>
           <div tw="">
@@ -496,14 +499,12 @@ export default function Game() {
                 <Button
                   onClick={() => {
                     Attack()
-                    Attack()
                   }}
                 >
                   Attack
                 </Button>
                 <Button
                   onClick={() => {
-                    Defend()
                     Defend()
                   }}
                 >
@@ -519,7 +520,7 @@ export default function Game() {
                     width={256}
                     height={256}
                     alt={selectedPokemon.name}
-                    tw="p-2"
+                    tw="-scale-x-100 transform p-2"
                   />
                   <div tw="h-5 w-full rounded-full bg-black ring-2 ring-white/20">
                     <div
