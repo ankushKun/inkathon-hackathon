@@ -173,6 +173,7 @@ mod market {
                 }
 
                 bought = true;
+                self.items.insert(item_id, &itm);
             } else {
                 // transfer ownership
                 let mut owner_found = false;
@@ -211,6 +212,7 @@ mod market {
                                 itm.owners[j].1 += amt_to_buy;
                                 new_owner_found = true;
                                 bought = true;
+                                self.items.insert(item_id, &itm);
                                 break;
                             }
                         }
@@ -218,6 +220,7 @@ mod market {
                             itm.owners
                                 .push((self.env().caller(), amt_to_buy, 0, itm.price));
                             bought = true;
+                            self.items.insert(item_id, &itm);
                         }
                         break;
                     }
